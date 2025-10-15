@@ -2,89 +2,364 @@
 
 [![Downloads](https://pepy.tech/badge/rightmove-webscraper)](https://pepy.tech/project/rightmove-webscraper)
 
-<a href="http://www.rightmove.co.uk/" target="_blank">rightmove.co.uk</a> is one of the UK's largest property listings websites, hosting thousands of listings of properties for sale and to rent.
+A modern Python web scraper for [rightmove.co.uk](http://www.rightmove.co.uk/), one of the UK's largest property listings websites. This scraper extracts property data and prepares it in organized CSV files with comprehensive statistical analysis.
 
-<code>rightmove_webscraper.py</code> is a simple Python interface to scrape property listings from the website and prepare them in a Pandas dataframe for analysis.
+> **⚠️ Important Note**: This is a modernized version that works with Rightmove's current website (2025). The original package (`rightmove_webscraper` v1.1) is no longer functional due to Rightmove's website redesign.
 
-## Installation
+---
 
-Version 1.1 is available to install via Pip:
+## 🚀 Quick Start
 
- <code>pip install -U rightmove-webscraper</code>
+### 1. Setup
 
-## Scraping property listings
+```bash
+# Clone the repository
+git clone <repository-url>
+cd rightmove_webscraper.py
 
-1) Go to <a href="http://www.rightmove.co.uk/">rightmove.co.uk</a> and search for whatever region, postcode, city, etc. you are interested in. You can also add any additional filters, e.g. property type, price, number of bedrooms, etc.
+# Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-<img src = "./docs/images/rightmove_search_screen.PNG">
-
-2) Run the search on the rightmove website and copy the URL of the first results page.
-
-3) Create an instance of the class with the URL as the init argument.
-
-```python
-from rightmove_webscraper import RightmoveData
-
-url = "https://www.rightmove.co.uk/property-for-sale/find.html?searchType=SALE&locationIdentifier=REGION%5E94346"
-rm = RightmoveData(url)
+# Install dependencies
+pip install -r requirements.txt
 ```
 
-## What will be scraped?
+### 2. Get Your Search URL
 
-When a `RightmoveData` instance is created it automatically scrapes every page of results available from the search URL. However please note that rightmove restricts the total possible number of results pages to 42. Therefore if you perform a search which could theoretically return many thousands of results (e.g. "all rental properties in London"), in practice you are limited to only scraping the first 1050 results (42 pages * 25 listings per page = 1050 total listings). A couple of suggested workarounds to this limitation are:
+1. Go to [rightmove.co.uk](https://www.rightmove.co.uk)
+2. Search for properties with your desired filters:
+   - Location, price range, bedrooms, property type, etc.
+3. Copy the URL from your browser's address bar
 
-* Reduce the search area and perform multiple scrapes, e.g. perform a search for each London borough instead of 1 search for all of London.
-* Add a search filter to shorten the timeframe in which listings were posted, e.g. search for all listings posted in the past 24 hours, and schedule the scrape to run daily.
+### 3. Run the Scraper
 
-Finally, note that not every piece of data listed on the rightmove website is scraped, instead it is just a subset of the most useful features, such as price, address, number of bedrooms, listing agent. If there are additional data items you think should be scraped, please submit an issue or even better go find the xml path and submit a pull request with the changes.
+```bash
+# Activate virtual environment (if not already active)
+source venv/bin/activate
 
-## Accessing data 
-
-The following instance methods and properties are available to access the scraped data.
-
-**Full results as a Pandas.DataFrame**
-
-```python
-rm.get_results.head()
+# Run the main scraper (scrapes all pages)
+python multi_page_scraper.py
 ```
 
-<table border="1" class="dataframe">  <thead>    <tr style="text-align: right;">      <th></th>      <th>price</th>      <th>type</th>      <th>address</th>      <th>url</th>      <th>agent_url</th>      <th>postcode</th>      <th>full_postcode</th>      <th>number_bedrooms</th>      <th>search_date</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>3400000.0</td>      <td>2 bedroom apartment for sale</td>      <td>Switch House East, Battersea Power Station, SW11</td>      <td>http://www.rightmove.co.uk/properties/121457195#/?channel=RES_BUY</td>      <td>http://www.rightmove.co.uk/estate-agents/agent/JLL/London-Residential-Developments-100183.html</td>      <td>SW11</td>      <td>NaN</td>      <td>2.0</td>      <td>2022-03-24 09:40:13.769706</td>    </tr>    <tr>      <th>1</th>      <td>11080000.0</td>      <td>Property for sale</td>      <td>Battersea Power Station, Circus Road East, London</td>      <td>http://www.rightmove.co.uk/properties/118473812#/?channel=RES_BUY</td>      <td>http://www.rightmove.co.uk/estate-agents/agent/Moveli/London-191324.html</td>      <td>NaN</td>      <td>NaN</td>      <td>NaN</td>      <td>2022-03-24 09:40:13.769706</td>    </tr>    <tr>      <th>2</th>      <td>9950000.0</td>      <td>5 bedroom apartment for sale</td>      <td>888 Scott House, Battersea Power Station, SW11</td>      <td>http://www.rightmove.co.uk/properties/89344718#/?channel=RES_BUY</td>      <td>http://www.rightmove.co.uk/estate-agents/agent/Prestigious-Property-Ltd/Ruislip-67965.html</td>      <td>SW11</td>      <td>NaN</td>      <td>5.0</td>      <td>2022-03-24 09:40:13.769706</td>    </tr>    <tr>      <th>3</th>      <td>9200000.0</td>      <td>3 bedroom penthouse for sale</td>      <td>Battersea Power Station, Nine Elms, London SW8</td>      <td>http://www.rightmove.co.uk/properties/114236963#/?channel=RES_BUY</td>      <td>http://www.rightmove.co.uk/estate-agents/agent/Copperstones/London-82091.html</td>      <td>SW8</td>      <td>NaN</td>      <td>3.0</td>      <td>2022-03-24 09:40:13.769706</td>    </tr>    <tr>      <th>4</th>      <td>9000000.0</td>      <td>6 bedroom apartment for sale</td>      <td>Scott House, Battersea Power Station, SW11</td>      <td>http://www.rightmove.co.uk/properties/107110697#/?channel=RES_BUY</td>      <td>http://www.rightmove.co.uk/estate-agents/agent/Dockleys/London-174305.html</td>      <td>SW11</td>      <td>NaN</td>      <td>6.0</td>      <td>2022-03-24 09:40:13.769706</td>    </tr>  </tbody></table>
+**Output**: Creates a timestamped folder like `results/scrape_2025-Oct-15_at_13h45m/` containing:
+- `properties.csv` - All property data (18 columns)
+- `statistics.txt` - Comprehensive analysis report
 
+---
 
-**Average price of all listings scraped**
+## 📊 What Gets Scraped?
 
-```python
-rm.average_price
+The scraper automatically collects all available pages from your search URL (up to Rightmove's 42-page limit).
+
+### Property Data Fields (18 columns)
+
+| Field | Description |
+|-------|-------------|
+| `id` | Unique property ID |
+| `price` | Monthly rent or sale price (numeric) |
+| `price_display` | Formatted price string |
+| `frequency` | Payment frequency (monthly, etc.) |
+| `property_type` | Studio, Flat, Apartment, House, etc. |
+| `bedrooms` | Number of bedrooms |
+| `bathrooms` | Number of bathrooms |
+| `address` | Display address |
+| `summary` | Property description |
+| `property_url` | Direct link to listing |
+| `contact_url` | Agent contact form URL |
+| `branch` | Estate agent name |
+| `branch_id` | Agent branch ID |
+| `added_or_reduced` | "Added today", "Reduced yesterday", etc. |
+| `first_visible_date` | When listing first appeared |
+| `let_type` | Rental type information |
+| `postcode` | Extracted postcode area (e.g., SE18) |
+| `search_date` | Timestamp of scrape |
+
+### Statistics Report Includes
+
+- **Price analysis**: Mean, median, std dev, quartiles
+- **All postcodes**: Complete breakdown (not limited to top 10)
+- **All estate agents**: Full list with property counts
+- **Property types**: Breakdown by type
+- **Bedroom/bathroom counts**: Detailed summaries
+- **Listing status**: Added/reduced analysis
+- **Search criteria**: Documented for reference
+
+---
+
+## 📁 Available Scripts
+
+### Production Scripts
+
+#### `multi_page_scraper.py` ⭐ **Recommended**
+Scrapes **all pages** from your search automatically.
+
+**Features:**
+- Automatic pagination (up to 42 pages / ~1,000 properties)
+- Progress tracking with ✓ symbols
+- Duplicate removal
+- Rate limiting (1.5s delay between requests)
+- Organized output in timestamped folders
+- Comprehensive statistics with no limits
+
+**Usage:**
+```bash
+python multi_page_scraper.py
 ```
 
-> `1650065.841025641`
+#### `modern_scraper.py`
+Quick test scraper for the **first page only** (25 properties).
 
-**Total number of listings scraped**
-
-```python
-rm.results_count
+**Usage:**
+```bash
+python modern_scraper.py
 ```
 
-> `195`
+### Testing & Debug Scripts
 
-**Summary statistics** 
+#### `test_new_output.py`
+Tests the output folder structure by scraping 2 pages.
 
-By default shows the number of listings and average price grouped by the number of bedrooms:
+#### `debug_page.py`
+Debugs HTML structure and XPath selectors.
+
+#### `check_json_data.py`
+Inspects embedded JSON data structure.
+
+---
+
+## 🔧 Customizing Your Search
+
+### Method 1: Edit the Script
+
+Open `multi_page_scraper.py` and modify line 401:
 
 ```python
-rm.summary()
+url = "YOUR_RIGHTMOVE_SEARCH_URL_HERE"
 ```
 
-<table border="1" class="dataframe">  <thead>    <tr style="text-align: right;">      <th></th>      <th>number_bedrooms</th>      <th>count</th>      <th>mean</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>0</td>      <td>39</td>      <td>9.119231e+05</td>    </tr>    <tr>      <th>1</th>      <td>1</td>      <td>46</td>      <td>1.012935e+06</td>    </tr>    <tr>      <th>2</th>      <td>2</td>      <td>88</td>      <td>1.654237e+06</td>    </tr>    <tr>      <th>3</th>      <td>3</td>      <td>15</td>      <td>3.870867e+06</td>    </tr>    <tr>      <th>4</th>      <td>4</td>      <td>2</td>      <td>2.968500e+06</td>    </tr>    <tr>      <th>5</th>      <td>5</td>      <td>1</td>      <td>9.950000e+06</td>    </tr>    <tr>      <th>6</th>      <td>6</td>      <td>1</td>      <td>9.000000e+06</td>    </tr>  </tbody></table>
-
-Alternatively group the results by any other column from the <code>.get_results</code> DataFrame, for example by postcode:
+Update the `search_info` dictionary (lines 404-410) to document your criteria:
 
 ```python
-rm.summary(by="postcode")
+search_info = {
+    "Location": "Your Location",
+    "Price range": "£X - £Y pcm",
+    "Max bedrooms": "N",
+    # ... etc
+}
 ```
 
-<table border="1" class="dataframe">  <thead>    <tr style="text-align: right;">      <th></th>      <th>postcode</th>      <th>count</th>      <th>mean</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>SW11</td>      <td>76</td>      <td>1.598841e+06</td>    </tr>    <tr>      <th>1</th>      <td>SW8</td>      <td>28</td>      <td>2.171357e+06</td>    </tr>  </tbody></table>
+### Method 2: Use as a Module
 
-## Legal
+```python
+from multi_page_scraper import scrape_all_pages, generate_full_statistics, create_output_folder
 
-<a href="https://github.com/toddy86">@toddy86</a> has pointed out per the terms and conditions <a href="https://www.rightmove.co.uk/this-site/terms-of-use.html"> here</a> the use of webscrapers is unauthorised by rightmove. So please don't use this package!
+# Your search URL
+url = "https://www.rightmove.co.uk/property-to-rent/..."
+
+# Create output folder
+output_folder = create_output_folder()
+
+# Scrape all pages
+df = scrape_all_pages(url, delay=1.5)
+
+# Or limit to first 5 pages for testing
+df = scrape_all_pages(url, max_pages=5, delay=1.0)
+
+# Save results
+df.to_csv(output_folder / "properties.csv", index=False)
+
+# Generate statistics
+search_info = {"Location": "London", "Price range": "£500-£1500"}
+generate_full_statistics(df, output_folder, search_info)
+```
+
+---
+
+## 📈 Example Analysis
+
+### Load and Filter Data
+
+```python
+import pandas as pd
+
+# Load scraped data
+df = pd.read_csv('results/scrape_2025-Oct-15_at_13h45m/properties.csv')
+
+# Filter out parking spaces
+df = df[df['property_type'] != 'Parking']
+
+# Find 1-bedroom properties in SE18
+se18_1bed = df[(df['postcode'] == 'SE18') & (df['bedrooms'] == 1)]
+print(se18_1bed[['address', 'price', 'property_url']].head())
+
+# Compare average prices by area
+price_by_area = df.groupby('postcode')['price'].agg(['mean', 'count'])
+print(price_by_area.sort_values('mean'))
+
+# Find recently added properties
+recent = df[df['added_or_reduced'].str.contains('Added today', na=False)]
+print(f"Added today: {len(recent)} properties")
+```
+
+---
+
+## ⚙️ Configuration Options
+
+### Adjust Scraping Speed
+
+```python
+# Faster (use cautiously - may get rate limited)
+df = scrape_all_pages(url, delay=0.5)
+
+# Slower (more polite to the server)
+df = scrape_all_pages(url, delay=3.0)
+```
+
+### Limit Pages for Testing
+
+```python
+# Scrape only first 3 pages (72 properties)
+df = scrape_all_pages(url, max_pages=3)
+```
+
+---
+
+## 📋 Output Structure
+
+Each scrape creates a new timestamped folder:
+
+```
+results/
+├── scrape_2025-Oct-15_at_13h45m/
+│   ├── properties.csv          # All property data
+│   └── statistics.txt          # Comprehensive analysis
+├── scrape_2025-Oct-15_at_16h22m/
+│   ├── properties.csv
+│   └── statistics.txt
+└── ...
+```
+
+This organization allows you to:
+- Track searches over time
+- Compare market changes
+- Keep historical data organized
+
+---
+
+## 🔍 What Changed from Original?
+
+| Feature | Original (v1.1) | Modern Version |
+|---------|----------------|----------------|
+| **Website Compatibility** | ❌ Broken (XPath) | ✅ Works (JSON extraction) |
+| **Data Fields** | 9 basic fields | 18 extended fields |
+| **Output Organization** | Flat files | Timestamped folders |
+| **Statistics** | Top 10-15 only | Unlimited (all data) |
+| **Progress Tracking** | None | Real-time ✓ symbols |
+| **Rate Limiting** | None | Configurable delays |
+| **Error Handling** | Basic | Comprehensive |
+
+**See [CHANGES_SUMMARY.md](CHANGES_SUMMARY.md) for detailed technical changes.**
+
+---
+
+## 🚨 Troubleshooting
+
+### "ModuleNotFoundError"
+```bash
+# Make sure virtual environment is activated
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### "Status code: 403" or Rate Limiting
+```python
+# Increase delay between requests
+df = scrape_all_pages(url, delay=3.0)
+
+# Or wait a few minutes and try again
+```
+
+### "No properties found"
+- Verify the URL works in your browser
+- Check your search isn't too restrictive
+- Ensure the URL includes search parameters
+
+### "Could not find property data"
+The page structure may have changed. The scraper extracts data from Next.js JSON. If Rightmove updates their site, the scraper may need updating.
+
+---
+
+## 📚 Documentation
+
+- **[USAGE_GUIDE.md](USAGE_GUIDE.md)** - Comprehensive usage guide with advanced examples
+- **[CHANGES_SUMMARY.md](CHANGES_SUMMARY.md)** - Detailed changelog and technical details
+- **[FILES_RESTORED_COMPLETE.md](FILES_RESTORED_COMPLETE.md)** - Quick reference of all files
+
+---
+
+## ⚖️ Legal Notice
+
+**Important**: According to Rightmove's [terms and conditions](https://www.rightmove.co.uk/this-site/terms-of-use.html), the use of web scrapers is unauthorized.
+
+This tool is provided for:
+- **Educational purposes only**
+- **Personal research and analysis**
+- **Non-commercial use**
+
+**Use at your own risk.** Be respectful:
+- Use reasonable delays between requests (default 1.5s)
+- Don't overload their servers
+- Respect their terms of service
+
+---
+
+## 🛠️ Technical Details
+
+### Requirements
+- Python 3.6+
+- Dependencies: lxml, numpy, pandas, requests
+
+### How It Works
+1. Fetches Rightmove search results page
+2. Extracts embedded JSON from Next.js `__NEXT_DATA__` tag
+3. Parses property data from JSON structure
+4. Iterates through all result pages automatically
+5. Removes duplicates and validates data
+6. Exports to organized CSV and statistics files
+
+### Architecture
+```
+URL → HTTP Request → HTML Response → JSON Extraction →
+DataFrame Processing → Duplicate Removal →
+CSV Export + Statistics Generation → Timestamped Folder
+```
+
+---
+
+## 🤝 Contributing
+
+Found a bug or want to add a feature? Contributions welcome!
+
+1. Check if the issue is with Rightmove's site structure changing
+2. Update the JSON extraction logic in `scrape_rightmove_page()` if needed
+3. Test with multiple searches to ensure compatibility
+4. Update documentation accordingly
+
+---
+
+## 📝 License
+
+MIT License - See [LICENSE](LICENSE) file for details
+
+---
+
+## 🙏 Credits
+
+- Original project by [Toby Petty](https://github.com/toby-p)
+- Modernized for 2025 Rightmove website
+- Updated with comprehensive statistics and organized output
+
+---
+
+**Happy property hunting! 🏠**
