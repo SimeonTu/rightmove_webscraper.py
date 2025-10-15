@@ -1,0 +1,91 @@
+Modernize scraper for 2025 Rightmove website with organized output and comprehensive statistics
+
+## Summary
+Complete rewrite of the Rightmove web scraper to work with the current Next.js-based website (2025). The original XPath-based scraper was broken due to Rightmove's website redesign. This version extracts data from embedded JSON, adds organized timestamped output folders, and generates comprehensive statistical reports with no artificial limits.
+
+## Major Changes
+
+### Core Functionality
+- **Fixed website compatibility**: Replaced XPath HTML parsing with JSON extraction from Next.js `__NEXT_DATA__` tags
+- **Multi-page scraping**: Added automatic pagination with configurable delays (default 1.5s) and progress tracking
+- **Extended data fields**: Increased from 9 to 18 property fields including bathrooms, listing status, descriptions, and direct URLs
+
+### Output Organization
+- **Timestamped folders**: Each scrape creates `results/scrape_2025-Oct-15_at_13h45m/` with human-readable dates
+- **Comprehensive statistics**: Generated `statistics.txt` includes ALL postcodes, ALL estate agents (161+), and complete breakdowns with no top-N limits
+- **Structured exports**: Both CSV and TXT files organized in dated folders for easy comparison over time
+
+### Search Configuration
+- **Price filtering**: Added `minPrice=600` to filter out parking spaces and storage units
+- **Updated search**: South East London, £600-£1,500 pcm, max 2 bedrooms
+- **Documented criteria**: Search parameters embedded in statistics reports for reference
+
+### Code Quality
+- **Modern Python practices**: Type hints, Pathlib, context managers, f-strings
+- **Error handling**: Graceful failures with detailed error messages and duplicate detection
+- **Progress feedback**: Real-time page-by-page progress with ✓ symbols
+- **Rate limiting**: Polite scraping with configurable delays to avoid blocking
+
+## New Files Added
+
+### Production Scripts
+- `multi_page_scraper.py` - Main production scraper with full features
+- `modern_scraper.py` - Single-page scraper for quick tests
+
+### Development Tools
+- `test_new_output.py` - Test script for folder structure validation
+- `debug_page.py` - HTML structure debugging tool
+- `check_json_data.py` - JSON data inspection utility
+
+### Documentation
+- `USAGE_GUIDE.md` - Complete user manual with examples
+- `CHANGES_SUMMARY.md` - Detailed changelog and technical details
+- `FILES_RESTORED_COMPLETE.md` - Quick reference of all files
+- Updated `README.md` - Modern setup and usage instructions
+
+## Technical Details
+
+### Architecture Changes
+- **Before**: `URL → HTTP → HTML → XPath → DataFrame → CSV`
+- **After**: `URL → HTTP → HTML → JSON Extraction → DataFrame → CSV + Stats → Timestamped Folder`
+
+### Data Improvements
+- Price quartiles and standard deviations
+- Complete postcode analysis (36 unique areas)
+- Full estate agent breakdown (161+ agents tracked)
+- Bathroom counts and listing status tracking
+- Property descriptions and contact URLs
+
+### Performance & Reliability
+- Duplicate detection and removal (removed 9 duplicates in test run)
+- Configurable max pages for testing
+- Graceful pagination handling
+- Status code validation
+- Network error recovery
+
+## Testing
+- ✅ Successfully scraped 285 properties across 12 pages
+- ✅ Generated complete statistics with all breakdowns
+- ✅ Timestamped folders working correctly
+- ✅ CSV exports with 18 columns validated
+- ✅ Rate limiting preventing blocks
+
+## Breaking Changes
+- Original `RightmoveData` class from `rightmove_webscraper/scraper.py` no longer functional
+- Output location changed from project root to `results/` folders
+- Some column names changed/added (see documentation)
+
+## Migration Guide
+1. Use `multi_page_scraper.py` instead of original scraper
+2. Update any scripts referencing file paths to use `results/` folder
+3. Review new column names in CSV output
+4. Activate virtual environment: `source venv/bin/activate`
+
+## Dependencies
+- Existing requirements maintained (lxml, numpy, pandas, requests)
+- Virtual environment already configured
+- Python 3.6+ compatible (tested on 3.13.7)
+
+---
+
+**Result**: Fully functional scraper for 2025 Rightmove website with professional features for property market analysis.
