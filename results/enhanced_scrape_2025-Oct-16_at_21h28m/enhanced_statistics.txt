@@ -1,0 +1,151 @@
+================================================================================
+ENHANCED RIGHTMOVE SCRAPER - DETAILED STATISTICS REPORT
+================================================================================
+Generated: 2025-10-16 21:37:49
+================================================================================
+
+SEARCH CRITERIA
+--------------------------------------------------------------------------------
+Location: SE8 (Deptford, London)
+Price range: £1,400 - £1,500 pcm
+Max bedrooms: 2
+Include let agreed: Yes
+Exclude: House shares, retirement, student properties
+Search URL: https://www.rightmove.co.uk/property-to-rent/find.html?minBedrooms=2&sortType=6&dontShow=retirement%2Cstudent%2ChouseShare&minPrice=400&areaSizeUnit=sqft&channel=RENT&index=0&maxPrice=1400&retirement=false&locationIdentifier=USERDEFINEDAREA%5E%7B%22polylines%22%3A%22_%60qpIztj%5CbfKokuDemLejwCkrz%40czjEcm%5Eicm%40qoe%40sjDo%60s%40%7Cre%40syv%40%7CxeAugT%7Cj_A%7BaPditDpt%5Dl%7BhFr%7E%5Ed%7EvA%7Elp%40fwsAxvUtfQjqz%40r_Np%7BjA_fBr%7BYstWv%7BC%7Duu%40kzVqfxBcf%40ia%40%22%7D&transactionType=LETTING&displayLocationIdentifier=undefined
+
+================================================================================
+
+OVERALL STATISTICS
+--------------------------------------------------------------------------------
+Total properties: 1008
+Individual listing scrapes:
+  Successful: 1008
+  Failed: 0
+  Success rate: 100.0%
+
+Price statistics:
+  Count (with price): 1008
+  Average: £1,017.93 pcm
+  Median:  £995.00 pcm
+  Std Dev: £234.04
+  Min:     £450.00 pcm
+  Max:     £1,400.00 pcm
+
+Property size statistics (sq m):
+  Count (with size): 68
+  Average: 135.3 sq m
+  Median:  72.0 sq m
+  Std Dev: 225.8 sq m
+  Min:     45.0 sq m
+  Max:     929.0 sq m
+
+Size quartiles (sq m):
+  25th percentile: 62.8 sq m
+  50th percentile: 72.0 sq m
+  75th percentile: 81.2 sq m
+
+Property size statistics (sq ft):
+  Count (with size): 69
+  Average: 1447 sq ft
+  Median:  775 sq ft
+  Std Dev: 2413 sq ft
+  Min:     484 sq ft
+  Max:     9999 sq ft
+
+================================================================================
+
+LETTING DETAILS ANALYSIS
+--------------------------------------------------------------------------------
+
+COUNCIL TAX:
+  Total entries: 1008
+  Unique values: 1
+  Most common:
+    Ask agent: 1008 (100.0%)
+
+DEPOSIT:
+  Total entries: 1008
+  Unique values: 199
+  Most common:
+    Ask agent: 59 (5.9%)
+    £1,200: 38 (3.8%)
+    £850: 36 (3.6%)
+    £1,400: 36 (3.6%)
+    £1,300: 33 (3.3%)
+    £950: 31 (3.1%)
+    £995: 31 (3.1%)
+    £1,100: 28 (2.8%)
+    £1,000: 25 (2.5%)
+    £1,500: 25 (2.5%)
+
+FURNISH TYPE:
+  Total entries: 1008
+  Unique values: 5
+  Most common:
+    Unfurnished: 665 (66.0%)
+    Furnished: 233 (23.1%)
+    Part furnished: 66 (6.5%)
+    Ask agent: 25 (2.5%)
+    Furnished or unfurnished, landlord is flexible: 19 (1.9%)
+
+LET AVAILABLE DATE:
+  Total entries: 1008
+  Unique values: 41
+  Most common:
+    Now: 603 (59.8%)
+    Ask agent: 96 (9.5%)
+    27/10/2025: 35 (3.5%)
+    20/10/2025: 31 (3.1%)
+    31/10/2025: 27 (2.7%)
+    17/10/2025: 21 (2.1%)
+    03/11/2025: 20 (2.0%)
+    07/11/2025: 19 (1.9%)
+    24/10/2025: 15 (1.5%)
+    10/11/2025: 14 (1.4%)
+
+LET TYPE:
+  Total entries: 1008
+  Unique values: 2
+  Most common:
+    Long term: 1007 (99.9%)
+    Short term: 1 (0.1%)
+
+MIN. TENANCY:
+  Total entries: 1008
+  Unique values: 6
+  Most common:
+    Ask agent: 962 (95.4%)
+    12 months: 24 (2.4%)
+    1 month: 11 (1.1%)
+    6 months: 9 (0.9%)
+    5 months: 1 (0.1%)
+    24 months: 1 (0.1%)
+
+================================================================================
+
+PROPERTY SIZE BY BEDROOMS
+--------------------------------------------------------------------------------
+          Count  Avg Size (sq m)  Median Size (sq m)  Std Dev  Min Size (sq m)  Max Size (sq m)
+bedrooms                                                                                       
+2            51            118.5                67.0    205.0             45.0            929.0
+3            17            185.8                81.0    280.2             69.0            929.0
+
+================================================================================
+
+PRICE PER SQUARE METER ANALYSIS
+--------------------------------------------------------------------------------
+Properties with both price and size: 68
+Average price per sq m: £13.90
+Median price per sq m: £14.03
+Min price per sq m: £0.91
+Max price per sq m: £23.33
+
+Price per sq m by bedrooms:
+          Count  Avg £/sqm  Median £/sqm
+bedrooms                                
+2            51      14.52         15.19
+3            17      12.03         11.76
+
+================================================================================
+END OF ENHANCED REPORT
+================================================================================

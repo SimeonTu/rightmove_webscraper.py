@@ -1,0 +1,104 @@
+Hello Joana,
+
+Thank you for your response. I sincerely apologize for the unexpected charges - this was an honest mistake on my part during development. Below are my answers to your questions:
+
+1. What is the project used for?
+
+This is a personal hobby project - a web scraper for Rightmove (a UK property website) that I use to help me search for rental properties. I use Google Maps APIs to:
+- Geocode property addresses to get coordinates
+- Calculate distances and travel times from properties to locations I'm interested in (like city centers)
+
+It's strictly for my personal use - I'm not making any money from this or sharing the data with anyone. Just trying to find a place to rent!
+
+2. How were API keys used which incurred the excessive usage?
+
+I have Python scripts that process CSV files with property listings. The scripts make API calls to geocode addresses and calculate distances. The excessive usage happened because:
+- I ran the scripts multiple times during development/testing without realizing the cost
+- I processed several different property searches (different CSV files)
+- I didn't implement caching, so every time I ran a script it made new API calls
+- I made separate calls for driving and transit times for the same properties
+
+I included rate limiting in my scripts, but I honestly didn't realize how quickly the costs would add up when processing multiple files and running scripts multiple times.
+
+3. What went wrong and how were you able to identify the issue?
+
+I simply didn't monitor my API usage or set up billing alerts. I was focused on getting the scripts working and didn't think about the cost implications. I ran the scripts multiple times during testing, processed different CSV files, and didn't realize that each run was making hundreds of API calls.
+
+I found out when I received the billing notification from Google Cloud Platform. I checked my billing dashboard and saw the high usage from Google Maps APIs, then looked at my scripts and realized what had happened.
+
+4. What did you do to solve the problem and prevent it in the future?
+
+Immediately, I:
+- Disabled my API key to stop any further usage
+- Deleted all the cached data (CSV files with the enriched data)
+- Set up billing alerts in Google Cloud Console
+
+Going forward, I've:
+- Added local caching so I don't make redundant API calls
+- Set up API key restrictions and daily quotas in Google Cloud Console
+- Added usage tracking and warnings in my scripts
+- Created a test mode that uses minimal data
+
+I'll be much more careful about monitoring usage in the future.
+
+5. Please confirm that your use case is within the bounds of the Terms of Service
+
+Yes, I confirm my use case complies with the Terms of Service. This is purely personal, non-commercial use for my own property research. I'm not using the APIs commercially, reselling data, or providing any service to others. I've reviewed the terms and believe my use case is compliant.
+
+6. Please confirm that you did not have any benefits (e.g. caching data) from this usage. If you did, you have to delete the data and confirm you have done so.
+
+I did cache some data in CSV files (addresses with geocoded coordinates and calculated distances), but I have now deleted all of it. I've removed all CSV files from the `results/` folders that contained data from Google Maps APIs. I can confirm this cached data has been deleted.
+
+7. Date(s) affected:
+
+[Please fill in the specific dates from your Google Cloud Console billing dashboard]
+
+8. Acknowledgement that you are already responsible for your future charges:
+
+I acknowledge that I am fully responsible for all future charges. I understand that any courtesy adjustment (if approved) doesn't excuse me from being careful in the future. I've put safeguards in place and will monitor my usage going forward. I won't request additional adjustments for future usage.
+
+Again, I sincerely apologize for this mistake. I should have been more careful about monitoring my API usage from the start. I've learned from this and have taken steps to prevent it from happening again.
+
+Thank you for your consideration.
+
+Best regards,
+[Your Name]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,24 @@
+Hello Joana,
+
+Thank you for the information. I have now set up proper safeguards to prevent future unexpected charges.
+
+I have configured the following:
+
+- **API Key Restrictions**: Restricted my API key to only Routes API and Geocoding API to prevent accidental use of other services
+- **Billing Alerts**: Enabled billing alerts in Google Cloud Console to be notified when usage approaches thresholds
+- **Quota Management**: Reviewed the quota settings for Routes API and Geocoding API. I understand the free tier limits (5,000-10,000 requests/month for Routes API depending on version, and 40,000/month for Geocoding API) and will monitor my usage to stay within these limits
+
+I've also updated my scripts to:
+- Implement local caching to avoid redundant API calls
+- Add usage tracking and warnings before making batch API calls
+- Process smaller batches of data at a time
+
+These safeguards will help ensure I stay within the free tier limits and prevent any future unexpected charges.
+
+Please let me know if you need any additional information or if you can now proceed with reviewing my billing adjustment request.
+
+Thank you for your patience.
+
+Best regards,
+[Your Name]
+

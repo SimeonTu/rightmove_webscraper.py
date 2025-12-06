@@ -1,0 +1,156 @@
+# Google Maps Platform Billing Support - Response
+
+## 1. What is the project used for?
+
+This is a personal hobby project - a web scraper for Rightmove (a UK property listing website) that I use for personal property research. The project scrapes property listings and uses Google Maps APIs to enrich the data with geographic information. Specifically, I use the APIs to:
+
+- Geocode property addresses to coordinates (using Geocoding API)
+- Calculate distances and travel times from properties to specific locations of interest (using Routes API / Distance Matrix API)
+- Calculate both driving and transit times for properties in Scotland (Edinburgh and Glasgow areas)
+
+This is strictly for personal use to help me analyze property locations and commute times when searching for properties to rent. It is not a commercial project, and I do not use it for any business purposes or share the data with others.
+
+## 2. How were API keys used which incurred the excessive usage?
+
+The API keys were used in Python scripts that process CSV files containing property listings. The scripts:
+
+- Load property addresses from CSV files (typically containing hundreds of properties)
+- For each property address, make API calls to:
+  - Geocode addresses to get coordinates (Geocoding API)
+  - Calculate distances and travel times to fixed destinations using the Routes API (Distance Matrix endpoint)
+- Process addresses in batches of 25 per API call to respect rate limits
+- Run separate API calls for different travel modes (DRIVE and TRANSIT) for the same properties
+
+The excessive usage likely occurred because:
+- I ran these enrichment scripts multiple times during development and testing
+- I processed multiple CSV files from different property searches
+- Each script run makes API calls for every property address (no caching was implemented)
+- I made separate API calls for both driving and transit times for the same properties
+
+The scripts include rate limiting (sleep delays between batches), but I did not anticipate the cumulative cost of processing multiple large datasets and running the scripts multiple times during development.
+
+## 3. What went wrong and how were you able to identify the issue?
+
+What went wrong:
+- I did not set up proper billing alerts or monitor API usage closely during development
+- I was not aware of the cost implications of the Routes API, particularly the per-request pricing
+- I ran the scripts multiple times on the same data during testing and development without implementing caching
+- I processed multiple property search results (different CSV files) without realizing the cumulative API calls would be so high
+- There was no cost tracking or usage monitoring in place
+
+How I identified the issue:
+- I received a billing notification from Google Cloud Platform showing unexpected charges
+- I reviewed the Google Cloud Console billing dashboard and saw the high usage from Google Maps Platform APIs
+- I checked my API usage logs and realized the scripts had made many more API calls than I anticipated
+- I reviewed the scripts and calculated that processing multiple CSV files with hundreds of properties each, multiplied by multiple destinations and travel modes, resulted in thousands of API calls
+
+## 4. What did you do to solve the problem and prevent it in the future?
+
+Immediate actions taken:
+- **Disabled the API key** to prevent any further usage until I can properly configure usage limits
+- **Deleted all cached data** from previous script runs (CSV files with enriched data)
+- **Reviewed all scripts** to understand the API usage patterns
+- **Set up billing alerts** in Google Cloud Console to be notified of usage thresholds
+
+Prevention measures implemented:
+- **Added API usage tracking** to scripts to log and monitor API calls
+- **Implemented local caching** so that if I need to re-run scripts, previously geocoded addresses and calculated distances are retrieved from local cache files instead of making new API calls
+- **Added explicit cost warnings** in scripts before making batch API calls
+- **Set up API key restrictions** in Google Cloud Console:
+  - Restricted API key to only necessary APIs (Routes API, Geocoding API)
+  - Added IP address restrictions if applicable
+  - Set daily quotas/limits on API usage
+- **Created a development/testing mode** that uses mock data or smaller sample sizes
+- **Added usage estimates** before running scripts (showing estimated API calls and cost)
+- **Documented API usage** in the project README with warnings about costs
+
+Future plans:
+- I will process smaller batches of data at a time
+- I will implement more aggressive caching to avoid redundant API calls
+- I will monitor usage regularly through the Google Cloud Console
+- I will test scripts with minimal data first before processing large datasets
+
+## 5. Please confirm that your use case is within the bounds of the Terms of Service
+
+Yes, I confirm that my use case is within the bounds of the Terms of Service. 
+
+My use case:
+- Personal, non-commercial use for property research
+- Geocoding addresses and calculating distances/travel times for properties I am researching for personal rental purposes
+- The data is used only by me for personal analysis
+- I am not using the APIs for any commercial purpose, reselling data, or providing a service to others
+- I am not scraping or caching map tiles or imagery
+- I am using the APIs for their intended purpose: geocoding addresses and calculating routes
+
+I have reviewed the Google Maps Platform Terms of Service (https://cloud.google.com/maps-platform/terms/) and I believe my personal, non-commercial use case complies with these terms.
+
+## 6. Please confirm that you did not have any benefits (e.g. caching data) from this usage. If you did, you have to delete the data and confirm you have done so.
+
+I did cache some data from the API usage in CSV files that contained enriched property data (addresses with geocoded coordinates and calculated distances/travel times). However, I have now **deleted all of this cached data**.
+
+Specifically, I have deleted:
+- All CSV files containing geocoded coordinates from the Geocoding API
+- All CSV files containing distance and travel time calculations from the Routes API
+- All output files from the enrichment scripts that used Google Maps APIs
+
+The data was stored locally in my project directory under `results/` folders. I have removed all files that contained data derived from Google Maps APIs. I can confirm that I have deleted this cached data and no longer have any stored results from the API usage.
+
+## 7. Date(s) affected:
+
+[Please fill in the specific dates from your Google Cloud Console billing dashboard. You can find these in the billing section showing when the charges occurred. Example format: "October 15-17, 2025" or list specific dates if known]
+
+## 8. Acknowledgement that you are already responsible for your future charges:
+
+I acknowledge that I am responsible for all future charges related to Google Maps Platform API usage. I understand that:
+
+- Any future API usage will be billed according to Google's pricing
+- The one-time courtesy adjustment (if approved) does not excuse me from monitoring future usage
+- I am responsible for setting up proper usage limits, billing alerts, and monitoring
+- I will implement the prevention measures outlined above to avoid future unexpected charges
+- I will not request additional courtesy adjustments for future usage
+
+I take full responsibility for managing my API usage going forward and will ensure proper safeguards are in place before enabling the API key again.
+
+---
+
+**Additional Notes:**
+I sincerely apologize for the oversight that led to these unexpected charges. This was an honest mistake during development of a personal hobby project, and I have taken steps to ensure it does not happen again. I appreciate your consideration of this one-time courtesy adjustment request.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
